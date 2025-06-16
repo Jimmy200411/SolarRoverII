@@ -11,6 +11,11 @@ int ARM_DOWN;
 int ARM_RIGHT;
 int ARM_LEFT;
 
+int Shoulder;
+int Elbow;
+
+int NextState;
+
 
 // This callback gets called any time a new gamepad is connected.
 // Up to 4 gamepads can be connected at the same time.
@@ -54,7 +59,7 @@ void onDisconnectedController(ControllerPtr ctl) {
 
 
 void dumpGamepad(ControllerPtr ctl) {
-    Serial.printf(
+    /*Serial.printf(
         "idx=%d, dpad: 0x%02x, buttons: 0x%04x, axis L: %4d, %4d, axis R: %4d, %4d, brake: %4d, throttle: %4d, "
         "misc: 0x%02x, gyro x:%6d y:%6d z:%6d, accel x:%6d y:%6d z:%6d\n",
         ctl->index(),        // Controller Index
@@ -73,7 +78,7 @@ void dumpGamepad(ControllerPtr ctl) {
         ctl->accelX(),       // Accelerometer X
         ctl->accelY(),       // Accelerometer Y
         ctl->accelZ()        // Accelerometer Z
-    );
+    );*/
 }
 
 
@@ -85,12 +90,16 @@ void processGamepad(ControllerPtr ctl) {
 
     //SpeedD        = ctl->throttle();
     //SpeedR        = ctl->brake();
-    //Steer         = ctl->axisX();
     //LineTrackMode = ctl->buttons() & 0x0020;
-    ARM_UP         = ctl->dpad() & DPAD_UP;
-    ARM_DOWN       = ctl->dpad() & DPAD_DOWN;
-    ARM_LEFT      = ctl->dpad() & DPAD_LEFT;
-    ARM_RIGHT     = ctl->dpad() & DPAD_RIGHT;
+    ARM_UP          = ctl->dpad() & DPAD_UP;
+    ARM_DOWN        = ctl->dpad() & DPAD_DOWN;
+    ARM_LEFT        = ctl->dpad() & DPAD_LEFT;
+    ARM_RIGHT       = ctl->dpad() & DPAD_RIGHT;
+
+    Shoulder        = ctl->axisY();
+    Elbow           = ctl->axisRY();
+
+    NextState      = ctl->b();
     //HomePos       = ctl->a();
 
 
